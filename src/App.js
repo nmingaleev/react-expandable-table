@@ -1,23 +1,39 @@
-import logo from './logo.svg';
 import './App.css';
 
+import { ExpandableTable } from './expandableTable';
+import { MovieDescription } from './movieDescription';
+
+import { data } from './data';
+
 function App() {
+  const columns = [
+    {
+      title: 'Title',
+      renderCell: (item) => item.title,
+    },
+    {
+      title: 'Director',
+      renderCell: (item) => item.director,
+    }
+  ];
+
+  const renderExpandedRow = (item) => {
+    return (
+      <MovieDescription
+        img={item.img}
+        alt={item.title} 
+        description={item.description}
+      />
+    );
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ExpandableTable
+        columns={columns}
+        items={data}
+        renderExpandedRow={renderExpandedRow}
+      />
     </div>
   );
 }
